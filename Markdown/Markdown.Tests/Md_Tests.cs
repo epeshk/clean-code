@@ -16,7 +16,7 @@ namespace Markdown.Tests
         [TestCase(@"\__a_\_", Result = "_<em>a_</em>_", TestName = "Escape_NotGreedy")]
         [TestCase(@"\__a_\_", Result = "_<em>a_</em>_", TestName = "Save_If")]
         [TestCase(@"___abc___", Result = "<strong><em>a_</em></strong>", TestName = "Triple_")]
-        public string Should_convert_to_Html_correct(string markdown)
+        public string Should_convert_to_Html_correctly(string markdown)
         {
             return Md.Render(markdown);
         }
