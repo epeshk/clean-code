@@ -16,7 +16,9 @@ namespace Markdown.Nodes
 
         public void Render(RenderVisitor renderer)
         {
-            renderer.RenderBoldNode(this);
+            renderer.StartBold();
+            foreach (var node in nestedNodes)
+                node.Render(renderer);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Markdown.Nodes;
 
 namespace Markdown.TextRender
 {
@@ -17,30 +16,35 @@ namespace Markdown.TextRender
             Writer = writer;
         }
 
-        public virtual void RenderItalicNode(ItalicNode node)
+        public virtual void StartItalic()
         {
-            RenderTextNode(node);
+            
+        }
+        public virtual void EndItalic()
+        {
+            
         }
 
-        public virtual void RenderBoldNode(BoldNode node)
+        public virtual void StartBold()
         {
-            RenderStructureNode(node);
+            
+        }
+        public virtual void EndBold()
+        {
+            
         }
 
-        public virtual void RenderParagraphNode(ParagraphNode node)
+        public virtual void StartParagrapn()
         {
-            RenderStructureNode(node);
+            
+        }
+        public virtual void EndParagraph()
+        {
+            
         }
 
-        public virtual void RenderTextNode(TextNode node)
+        public virtual void WriteText(string text)
         {
-            Writer.Write(node.Text);
-        }
-
-        protected virtual void RenderStructureNode(IStructureNode node)
-        {
-            foreach (var nestedNode in node.NestedNodes)
-                nestedNode.Render(this);
             
         }
     }

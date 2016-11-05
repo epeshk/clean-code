@@ -10,7 +10,9 @@ namespace Markdown.Nodes
 
         public override void Render(RenderVisitor renderer)
         {
-            renderer.RenderItalicNode(this);
+            renderer.StartItalic();
+            renderer.WriteText(Text);
+            renderer.EndItalic();
         }
     }
 }

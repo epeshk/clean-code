@@ -15,7 +15,10 @@ namespace Markdown.Nodes
 
         public void Render(RenderVisitor renderer)
         {
-            renderer.RenderParagraphNode(this);
+            renderer.StartParagrapn();
+            foreach (var node in nestedNodes)
+                node.Render(renderer);
+            renderer.EndParagraph();
         }
     }
 }

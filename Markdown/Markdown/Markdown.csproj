@@ -47,10 +47,7 @@
     <Compile Include="Nodes\ItalicNode.cs" />
     <Compile Include="Nodes\ParagraphNode.cs" />
     <Compile Include="TextRender\HtmlRenderVisitor.cs" />
-    <Compile Include="TextRender\HtmlTagHandle.cs" />
-    <Compile Include="TextRender\HtmlTextWriterExtensions.cs" />
     <Compile Include="TextRender\RenderVisitor.cs" />
-    <Compile Include="TextParser\StreamingString.cs" />
     <Compile Include="Md.cs" />
     <Compile Include="Properties\FriendAssemblies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

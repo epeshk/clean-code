@@ -1,6 +1,5 @@
 using System.IO;
 using System.Web.UI;
-using Markdown.Nodes;
 
 namespace Markdown.TextRender
 {
@@ -13,22 +12,38 @@ namespace Markdown.TextRender
             Writer = htmlWriter = new HtmlTextWriter(writer, new string(' ', 4));
         }
 
-        public override void RenderParagraphNode(ParagraphNode node)
+        public override void StartBold()
         {
-            using (htmlWriter.WriteTag("p"))
-                RenderStructureNode(node);
+            base.StartBold();
         }
 
-        public override void RenderBoldNode(BoldNode node)
+        public override void EndBold()
         {
-            using (htmlWriter.WriteTag("strong"))
-                RenderStructureNode(node);
+            base.StartBold();
         }
 
-        public override void RenderItalicNode(ItalicNode node)
+        public override void StartItalic()
         {
-            using (htmlWriter.WriteTag("em"))
-                RenderTextNode(node);
+            base.StartItalic();
+        }
+        public override void EndItalic()
+        {
+            base.StartItalic();
+        }
+
+        public override void StartParagrapn()
+        {
+            base.StartParagrapn();
+        }
+
+        public override void EndParagraph()
+        {
+            base.EndParagraph();
+        }
+
+        public override void WriteText(string text)
+        {
+            base.WriteText(text);
         }
     }
 }

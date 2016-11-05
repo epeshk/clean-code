@@ -13,7 +13,7 @@ namespace Markdown.Nodes
 
         public virtual void Render(RenderVisitor renderer)
         {
-            renderer.RenderTextNode(this);
+            renderer.WriteText(Text);
         }
     }
 }
