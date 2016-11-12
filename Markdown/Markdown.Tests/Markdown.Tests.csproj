@@ -58,7 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Md_Tests.cs" />
+    <Compile Include="EscapedStringExtensionsTests.cs" />
+    <Compile Include="EscapedStringTests.cs" />
+    <Compile Include="HtmlRendererTests.cs" />
+    <Compile Include="MarkdownParserTests.cs" />
+    <Compile Include="MdTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

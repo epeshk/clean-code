@@ -41,20 +41,21 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextParser\MarkdownEnumerableExtensions.cs" />
+    <Compile Include="TextParser\MarkerPosition.cs" />
+    <Compile Include="TextRender\Tag.cs" />
+    <Compile Include="TextRender\TagDescription.cs" />
+    <Compile Include="TextRender\IRenderer.cs" />
+    <Compile Include="TextRender\Position.cs" />
     <Compile Include="TextParser\IParser.cs" />
     <Compile Include="TextParser\MarkdownParser.cs" />
-    <Compile Include="Nodes\BoldNode.cs" />
-    <Compile Include="Nodes\ItalicNode.cs" />
-    <Compile Include="Nodes\ParagraphNode.cs" />
-    <Compile Include="TextRender\HtmlRenderVisitor.cs" />
-    <Compile Include="TextRender\RenderVisitor.cs" />
+    <Compile Include="Utilities\EscapedString.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="TextRender\HtmlRenderer.cs" />
     <Compile Include="Md.cs" />
     <Compile Include="Properties\FriendAssemblies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextRender\RenderTarget.cs" />
-    <Compile Include="Nodes\INode.cs" />
-    <Compile Include="Nodes\IStructureNode.cs" />
-    <Compile Include="Nodes\TextNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using Markdown.Nodes;
+using Markdown.TextRender;
+using Markdown.Utilities;
 
 namespace Markdown.TextParser
 {
     public interface IParser
     {
-        IEnumerable<INode> ParseToNodes(string str);
+        IEnumerable<TagDescription> GetRenderMarkers(EscapedString str);
     }
 }
