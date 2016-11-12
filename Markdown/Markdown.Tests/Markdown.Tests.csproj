@@ -62,6 +62,7 @@
     <Compile Include="EscapedStringTests.cs" />
     <Compile Include="HtmlRendererTests.cs" />
     <Compile Include="MarkdownParserTests.cs" />
+    <Compile Include="MdPerfomanceTests.cs" />
     <Compile Include="MdTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
