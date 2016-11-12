@@ -6,23 +6,38 @@ namespace Markdown.Tests
     [TestFixture]
     public class MdPerfomanceTests
     {
-        private string stringToParse;
+        private string stringToParse1;
+        private string stringToParse2;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             var sb = new StringBuilder(200000);
             for (var i = 0; i < 10000; ++i)
                 sb.Append("___a___b__a_ab_a__".PadRight(20, 'a'));
 
-            stringToParse = sb.ToString();
+            stringToParse1 = sb.ToString();
+
+            sb.Clear();
+            sb.Append("__a");
+            for (var i = 1; i < 10000; ++i)
+                sb.Append("___a_a_a_a___a___".PadRight(20, 'a'));
+
+            stringToParse2 = sb.ToString();
         }
 
         [Test]
         [Timeout(1000)]
-        public string Should_word_fast()
+        public string Should_work_fast1()
         {
-            return Md.Render(stringToParse);
+            return Md.Render(stringToParse1);
+        }
+
+        [Test]
+        [Timeout(1000)]
+        public string Should_work_fast2()
+        {
+            return Md.Render(stringToParse2);
         }
     }
 }
