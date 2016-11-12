@@ -28,14 +28,14 @@ namespace Markdown.Tests
 
         [Test]
         [Timeout(1000)]
-        public string Should_work_fast1()
+        public string Should_not_be_very_slow1()
         {
             return Md.Render(stringToParse1);
         }
 
         [Test]
         [Timeout(1000)]
-        public string Should_work_fast2()
+        public string Should_not_be_very_slow2()
         {
             return Md.Render(stringToParse2);
         }
