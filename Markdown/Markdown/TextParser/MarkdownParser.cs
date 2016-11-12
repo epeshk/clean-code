@@ -7,7 +7,7 @@ namespace Markdown.TextParser
 {
     public class MarkdownParser : IParser
     {
-        public IEnumerable<TagDescription> GetRenderMarkers(EscapedString paragraph)
+        public IEnumerable<TagDescription> GetTagDescriptions(EscapedString paragraph)
         {
             var italicBoldMarkers = GetMarkersPosition(paragraph, "___");
             var boldMarkers = GetMarkersPosition(paragraph, "__");

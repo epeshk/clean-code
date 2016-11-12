@@ -6,6 +6,6 @@ namespace Markdown.TextParser
 {
     public interface IParser
     {
-        IEnumerable<TagDescription> GetRenderMarkers(EscapedString str);
+        IEnumerable<TagDescription> GetTagDescriptions(EscapedString str);
     }
 }
