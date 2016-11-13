@@ -9,6 +9,7 @@ namespace Markdown.TextParser
     {
         public IEnumerable<TagDescription> GetTagDescriptions(EscapedString paragraph)
         {
+            // CR: Literals in code (duplicated even!)
             var italicBoldMarkers = GetMarkersPosition(paragraph, "___");
             var boldMarkers = GetMarkersPosition(paragraph, "__");
             var italicMarkers = GetMarkersPosition(paragraph, "_");

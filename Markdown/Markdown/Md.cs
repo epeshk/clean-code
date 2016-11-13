@@ -6,6 +6,7 @@ using Markdown.Utilities;
 
 namespace Markdown
 {
+    // Nit: IMO, name sucks
     public static class Md
     {
         public static string Render(string markdown, RenderTarget renderTarget = RenderTarget.Html)

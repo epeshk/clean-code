@@ -3,6 +3,9 @@ using NUnit.Framework;
 
 namespace Markdown.Tests
 {
+    // CR: Performance test SHOULD NOT BE UNIT. NEVER.
+    // Because you want to run unit tests on every build to
+    // quickly check correctness. Mark it with tag & make explicit
     [TestFixture]
     public class MdPerfomanceTests
     {
