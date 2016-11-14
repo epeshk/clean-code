@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Markdown.Tests
 {
+    [Explicit]
     [TestFixture]
     public class MdPerfomanceTests
     {
