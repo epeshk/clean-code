@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+using Markdown.Tree;
 
 namespace Markdown.TextParser
 {
@@ -11,30 +11,57 @@ namespace Markdown.TextParser
             MarkerPosition current = null;
             foreach (var marker in markerPositions)
             {
-                if (current != null && marker.Start >= current.End)
+                if (current != null && marker.Start >= current.UpperBound)
                     current = null;
-                if (current == null || (current.End >= marker.End))
+                if (current == null || (current.UpperBound >= marker.UpperBound))
                     yield return marker;
                 if (current == null)
                     current = marker;
             }
         }
 
-        public static IEnumerable<MarkerPosition> RemoveMarkersNestedIn(
-            this IEnumerable<MarkerPosition> markerPositions, params string[] markers)
+        public static IEnumerable<MarkerPosition> RemoveRedundantNestedMarkers(
+            this IEnumerable<MarkerPosition> markerPositions)
         {
             MarkerPosition current = null;
             foreach (var marker in markerPositions)
             {
-                if (current != null && marker.Start >= current.End)
+                if (current != null && marker.Start >= current.UpperBound)
                     current = null;
                 if (current != null)
                     continue;
 
                 yield return marker;
-                if (markers.Contains(marker.Marker))
+                if (!marker.Marker.CanContainNested)
                     current = marker;
             }
+        }
+
+        public static IEnumerable<INode> GetNodes(this IEnumerable<MarkerPosition> markers, string text)
+        {
+            return GetNodes(markers.GetEnumerator(), text, 0, text.Length);
+        }
+
+        private static IEnumerable<INode> GetNodes(IEnumerator<MarkerPosition> markers, string text, int start, int upperBound)
+        {
+            var current = start;
+
+            while (markers.MoveNext())
+            {
+                var marker = markers.Current;
+                if (marker.Start >= upperBound)
+                    break;
+                if (current < marker.Start)
+                    yield return new TextNode(text.Substring(current, marker.Start - current));
+
+                var node = marker.Marker.CanContainNested
+                    ? marker.Marker.CreateNode(GetNodes(markers, text, marker.Start + marker.Marker.AddOnStart, marker.UpperBound - marker.Marker.AddOnEnd))
+                    : marker.Marker.CreateNode(text, marker.Start, marker.UpperBound);
+                yield return node;
+                current = marker.UpperBound;
+            }
+            if (current < upperBound)
+                yield return new TextNode(text.Substring(current, upperBound - current));
         }
     }
 }

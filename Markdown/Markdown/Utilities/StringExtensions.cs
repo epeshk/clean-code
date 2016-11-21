@@ -4,12 +4,16 @@
     {
         public static bool MatchStart(this EscapedString paragraph, int position, string marker)
         {
+            if (position < 0)
+                return false;
             return Match(paragraph, position, marker)
                    && !CharIsWhitespace(paragraph, position + marker.Length);
         }
 
         public static bool MatchEnd(this EscapedString paragraph, int position, string marker)
         {
+            if (position < 0)
+                return false;
             return Match(paragraph, position, marker)
                    && !CharIsWhitespace(paragraph, position - 1);
         }

@@ -41,14 +41,20 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextParser\BoldMarker.cs" />
+    <Compile Include="TextParser\IMarker.cs" />
+    <Compile Include="TextParser\ItalicBoldMarker.cs" />
+    <Compile Include="TextParser\ItalicMarker.cs" />
     <Compile Include="TextParser\MarkdownEnumerableExtensions.cs" />
     <Compile Include="TextParser\MarkerPosition.cs" />
+    <Compile Include="TextParser\TagMarker.cs" />
+    <Compile Include="Utilities\Handle.cs" />
     <Compile Include="TextRender\Tag.cs" />
-    <Compile Include="TextRender\TagDescription.cs" />
     <Compile Include="TextRender\IRenderer.cs" />
-    <Compile Include="TextRender\Position.cs" />
     <Compile Include="TextParser\IParser.cs" />
     <Compile Include="TextParser\MarkdownParser.cs" />
+    <Compile Include="Tree\INode.cs" />
+    <Compile Include="Tree\StructureNode.cs" />
     <Compile Include="Utilities\EscapedString.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="TextRender\HtmlRenderer.cs" />

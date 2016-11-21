@@ -2,14 +2,14 @@
 {
     internal class MarkerPosition
     {
-        public readonly int End;
-        public readonly string Marker;
+        public readonly int UpperBound;
+        public readonly IMarker Marker;
         public readonly int Start;
 
-        public MarkerPosition(int start, int end, string marker)
+        public MarkerPosition(int start, int upperBound, IMarker marker)
         {
             Start = start;
-            End = end;
+            UpperBound = upperBound;
             Marker = marker;
         }
     }

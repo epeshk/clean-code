@@ -3,6 +3,7 @@
     public enum Tag
     {
         Italic,
-        Bold
+        Bold,
+        Paragraph
     }
 }

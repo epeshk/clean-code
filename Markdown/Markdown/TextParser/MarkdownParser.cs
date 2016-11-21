@@ -1,29 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Markdown.TextRender;
+using Markdown.Tree;
 using Markdown.Utilities;
 
 namespace Markdown.TextParser
 {
-    public class MarkdownParser : IParser
+    class MarkdownParser : IParser
     {
-        public IEnumerable<TagDescription> GetTagDescriptions(EscapedString paragraph)
+        public IEnumerable<MarkerPosition> SelectMarkers(EscapedString paragraph)
         {
-            var italicBoldMarkers = GetMarkersPosition(paragraph, "___");
-            var boldMarkers = GetMarkersPosition(paragraph, "__");
-            var italicMarkers = GetMarkersPosition(paragraph, "_");
+            var markers = new IMarker[]
+            {
+                new ItalicBoldMarker(), 
+                new BoldMarker(), 
+                new ItalicMarker()
+            };
 
-            var markdownMarkers = italicBoldMarkers
-                .Concat(boldMarkers)
-                .Concat(italicMarkers)
+            return markers
+                .SelectMany(marker => GetMarkersPosition(paragraph, marker))
                 .OrderBy(x => x.Start)
                 .RemoveIntersectsMarkers()
-                .RemoveMarkersNestedIn("_", "___");
-
-            return markdownMarkers.SelectMany(GetRenderMarkers);
+                .RemoveRedundantNestedMarkers();
         }
 
-        internal IEnumerable<MarkerPosition> GetMarkersPosition(EscapedString paragraph, string marker)
+        public INode GetRoot(EscapedString str)
+        {
+            return new StructureNode(SelectMarkers(str).GetNodes(str));
+        }
+
+        internal IEnumerable<MarkerPosition> GetMarkersPosition(EscapedString paragraph, IMarker marker)
         {
             var startCaptured = false;
             var startPosition = -1;
@@ -31,37 +36,16 @@ namespace Markdown.TextParser
             {
                 if (paragraph.IsEscaped(position))
                     continue;
-                if (startCaptured && paragraph.MatchEnd(position, marker))
+                if (startCaptured && marker.MatchEnd(paragraph, position))
                 {
-                    yield return new MarkerPosition(startPosition, position, marker);
+                    yield return new MarkerPosition(startPosition, position+marker.AddOnEnd, marker);
                     startCaptured = false;
                 }
-                else if (paragraph.MatchStart(position, marker))
+                else if (marker.MatchStart(paragraph, position))
                 {
                     startCaptured = true;
                     startPosition = position;
                 }
-            }
-        }
-
-        private IEnumerable<TagDescription> GetRenderMarkers(MarkerPosition marker)
-        {
-            switch (marker.Marker)
-            {
-                case "_":
-                    yield return
-                        new TagDescription(Tag.Italic, marker.Start, marker.End, 1, 1);
-                    break;
-                case "__":
-                    yield return
-                        new TagDescription(Tag.Bold, marker.Start, marker.End, 2, 2);
-                    break;
-                case "___":
-                    yield return
-                        new TagDescription(Tag.Bold, marker.Start, marker.End, 2, 2);
-                    yield return
-                        new TagDescription(Tag.Italic, marker.Start, marker.End, 1, 1);
-                    break;
             }
         }
     }

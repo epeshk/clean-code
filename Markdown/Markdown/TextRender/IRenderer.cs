@@ -1,9 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using Markdown.Utilities;
 
 namespace Markdown.TextRender
 {
     public interface IRenderer
     {
-        void WriteText(string text, IEnumerable<TagDescription> tagDescriptions);
+        void WriteText(string text);
+
+        void StartBold();
+        void EndBold();
+
+        void StartItalic();
+        void EndItalic();
+
+        void StartParagraph();
+        void EndParagraph();
+    }
+
+    public static class RendererExtensions
+    {
+        public static Handle Bold(this IRenderer renderer)
+        {
+            return new Handle(renderer.StartBold, renderer.EndBold);
+        }
+
+        public static Handle Italic(this IRenderer renderer)
+        {
+            return new Handle(renderer.StartItalic, renderer.EndItalic);
+        }
+
+        public static Handle Paragraph(this IRenderer renderer)
+        {
+            return new Handle(renderer.StartParagraph, renderer.EndParagraph);
+        }
     }
 }

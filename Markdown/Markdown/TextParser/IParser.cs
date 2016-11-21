@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using Markdown.TextRender;
+﻿using Markdown.Tree;
 using Markdown.Utilities;
 
 namespace Markdown.TextParser
 {
     public interface IParser
     {
-        IEnumerable<TagDescription> GetTagDescriptions(EscapedString str);
+        INode GetRoot(EscapedString str);
     }
 }

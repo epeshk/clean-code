@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="EscapedStringExtensionsTests.cs" />
     <Compile Include="EscapedStringTests.cs" />
-    <Compile Include="HtmlRendererTests.cs" />
+    <Compile Include="MarkdownEnumerableExtensionsTests.cs" />
     <Compile Include="MarkdownParserTests.cs" />
     <Compile Include="MdPerfomanceTests.cs" />
     <Compile Include="MdTests.cs" />

@@ -12,10 +12,10 @@ namespace Markdown
         {
             var parser = new MarkdownParser();
             var escapedString = new EscapedString(markdown);
-            var tagDescriptions = parser.GetTagDescriptions(escapedString);
+            var root = parser.GetRoot(escapedString);
             var writer = new StringWriter();
             var renderer = GetRenderer(renderTarget, writer);
-            renderer.WriteText(escapedString, tagDescriptions);
+            root.Render(renderer);
 
             return writer.ToString();
         }

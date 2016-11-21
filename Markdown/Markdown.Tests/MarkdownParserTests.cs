@@ -16,16 +16,16 @@ namespace Markdown.Tests
 
         private static readonly TestCaseData[] GetMarkersPositionTestCases =
         {
-            new TestCaseData("_a_", "_", new[] {new MarkerPosition(0, 2, "_")}),
-            new TestCaseData("__a__", "__", new[] {new MarkerPosition(0, 3, "__")}),
-            new TestCaseData("___a___", "___", new[] {new MarkerPosition(0, 4, "___")}),
-            new TestCaseData("ab_a_b_a_b", "_", new[] {new MarkerPosition(2, 4, "_"), new MarkerPosition(6, 8, "_")})
+            new TestCaseData("_a_", new ItalicMarker(), new[] {new MarkerPosition(0, 3, new ItalicMarker())}),
+            new TestCaseData("__a__", new BoldMarker(), new[] {new MarkerPosition(0, 5, new BoldMarker())}),
+            new TestCaseData("___a___", new ItalicBoldMarker(), new[] {new MarkerPosition(0, 7, new ItalicBoldMarker())}),
+            new TestCaseData("ab_a_b_a_b", new ItalicMarker(), new[] {new MarkerPosition(2, 5, new ItalicMarker()), new MarkerPosition(6, 9, new ItalicMarker())})
         };
 
         private MarkdownParser markdownParser;
 
         [TestCaseSource(nameof(GetMarkersPositionTestCases))]
-        public void GetMarkersPosition_should_return_correct_markers_position(string paragraph, string marker,
+        public void GetMarkersPosition_should_return_correct_markers_position(string paragraph, IMarker marker,
             MarkerPosition[] expected)
         {
             var escapedString = new EscapedString(paragraph);
