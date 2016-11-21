@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Markdown.TextRender;
+using NUnit.Framework;
 
 namespace Markdown.Tests
 {
@@ -25,7 +26,14 @@ namespace Markdown.Tests
         [TestCase(@"\__a_\_", Result = "_<em>a</em>_", TestName = "Escape_NotGreedy")]
         public string Should_convert_to_Html_correctly(string markdown)
         {
-            return Md.Render(markdown);
+            return Md.Render(markdown, RenderTarget.Html);
+        }
+
+        [TestCase(@"_a_", Result = "<em class=\"x\">a</em>", TestName = "To one tag")]
+        [TestCase(@"__a_b_c__", Result = "<strong class=\"x\">a<em class=\"x\">b</em>c</strong>", TestName = "To many tags")]
+        public string Should_add_className_if_specified(string markdown)
+        {
+            return Md.Render(markdown, RenderTarget.Html, "x");
         }
     }
 }

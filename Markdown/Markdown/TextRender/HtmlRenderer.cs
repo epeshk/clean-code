@@ -13,14 +13,21 @@ namespace Markdown.TextRender
         };
 
         private readonly TextWriter writer;
+        private readonly string className;
 
-        public HtmlRenderer(TextWriter writer)
+        public HtmlRenderer(TextWriter writer, string className = null)
         {
             this.writer = writer;
+            this.className = className;
         }
 
         private void WriteStartTag(Tag tag)
         {
+            if (className != null)
+            {
+                writer.Write("<{0} class=\"{1}\">", Tags[tag], className);
+                return;
+            }
             writer.Write("<{0}>", Tags[tag]);
         }
 
