@@ -1,18 +1,20 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Markdown.Tree;
 
 namespace Markdown.TextParser
 {
-    internal class SimpleParagraph : IParagraphKind
+    internal class CodeBlock : IParagraphKind
     {
         public bool IsMatch(string str)
         {
-            return true;
+            var lines = str.Split('\n');
+            return lines.All(line => line.StartsWith("\t") || line.StartsWith("    "));
         }
 
         public INode CreateNode(string str, IEnumerable<INode> nodes)
         {
-            return new ParagraphNode(nodes);
+            return new CodeBlockNode(str);
         }
 
         public string RemoveWrapperMarkers(string str)

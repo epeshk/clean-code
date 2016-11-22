@@ -9,7 +9,9 @@ namespace Markdown.TextRender
         {
             {Tag.Bold, "strong"},
             {Tag.Italic, "em"},
-            {Tag.Paragraph, "p"}
+            {Tag.Paragraph, "p"},
+            {Tag.Preformatted, "pre"},
+            {Tag.Code, "code"}
         };
 
         private readonly TextWriter writer;
@@ -78,6 +80,26 @@ namespace Markdown.TextRender
         public void EndParagraph()
         {
             WriteEndTag(Tag.Paragraph);
+        }
+
+        public void StartPreformatted()
+        {
+            WriteStartTag(Tag.Preformatted);
+        }
+
+        public void EndPreformatted()
+        {
+            WriteEndTag(Tag.Preformatted);
+        }
+
+        public void StartCode()
+        {
+            WriteStartTag(Tag.Code);
+        }
+
+        public void EndCode()
+        {
+            WriteEndTag(Tag.Code);
         }
 
         public void StartHeader(int level)

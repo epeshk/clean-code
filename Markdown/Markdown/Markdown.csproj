@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TextParser\BoldMarker.cs" />
+    <Compile Include="TextParser\CodeBlock.cs" />
     <Compile Include="TextParser\Header.cs" />
     <Compile Include="TextParser\IMarker.cs" />
+    <Compile Include="TextParser\InlineCodeMarker.cs" />
     <Compile Include="TextParser\IParagraphKind.cs" />
     <Compile Include="TextParser\ItalicBoldMarker.cs" />
     <Compile Include="TextParser\ItalicMarker.cs" />
@@ -51,8 +53,11 @@
     <Compile Include="TextParser\MarkerPosition.cs" />
     <Compile Include="TextParser\SimpleParagraph.cs" />
     <Compile Include="TextParser\TagMarker.cs" />
+    <Compile Include="TextRender\RendererExtensions.cs" />
     <Compile Include="Tree\BoldNode.cs" />
+    <Compile Include="Tree\CodeBlockNode.cs" />
     <Compile Include="Tree\HeaderNode.cs" />
+    <Compile Include="Tree\InlineCodeNode.cs" />
     <Compile Include="Tree\ItalicNode.cs" />
     <Compile Include="Tree\ParagraphNode.cs" />
     <Compile Include="Tree\TextNode.cs" />

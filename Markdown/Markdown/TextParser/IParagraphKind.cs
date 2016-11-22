@@ -6,7 +6,7 @@ namespace Markdown.TextParser
     internal interface IParagraphKind
     {
         bool IsMatch(string str);
-        StructureNode CreateNode(string str, IEnumerable<INode> nodes);
+        INode CreateNode(string str, IEnumerable<INode> nodes);
         string RemoveWrapperMarkers(string str);
     }
 }

@@ -4,6 +4,8 @@
     {
         Italic,
         Bold,
-        Paragraph
+        Paragraph,
+        Preformatted,
+        Code
     }
 }

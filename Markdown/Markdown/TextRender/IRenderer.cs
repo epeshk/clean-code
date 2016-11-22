@@ -1,6 +1,4 @@
-﻿using Markdown.Utilities;
-
-namespace Markdown.TextRender
+﻿namespace Markdown.TextRender
 {
     public interface IRenderer
     {
@@ -15,32 +13,13 @@ namespace Markdown.TextRender
         void StartParagraph();
         void EndParagraph();
 
+        void StartPreformatted();
+        void EndPreformatted();
+
+        void StartCode();
+        void EndCode();
+
         void StartHeader(int level);
         void EndHeader(int level);
-    }
-
-    public static class RendererExtensions
-    {
-        public static Handle Bold(this IRenderer renderer)
-        {
-            return new Handle(renderer.StartBold, renderer.EndBold);
-        }
-
-        public static Handle Italic(this IRenderer renderer)
-        {
-            return new Handle(renderer.StartItalic, renderer.EndItalic);
-        }
-
-        public static Handle Paragraph(this IRenderer renderer)
-        {
-            return new Handle(renderer.StartParagraph, renderer.EndParagraph);
-        }
-
-        public static Handle Header(this IRenderer renderer, int level)
-        {
-            return new Handle(
-                () => renderer.StartHeader(level),
-                () => renderer.EndHeader(level));
-        }
     }
 }

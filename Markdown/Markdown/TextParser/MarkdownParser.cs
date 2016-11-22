@@ -11,24 +11,23 @@ namespace Markdown.TextParser
         private static readonly IMarker[] Markers = {
             new ItalicBoldMarker(),
             new BoldMarker(),
-            new ItalicMarker()
+            new ItalicMarker(),
+            new InlineCodeMarker()
         };
 
         private static readonly IParagraphKind[] ParagraphKinds =
         {
             new Header(),
+            new CodeBlock(),
             new SimpleParagraph()
         };
 
         public INode ParseSingleParagraph(string paragraph, bool wrap = false)
         {
-
             var kind = ParagraphKinds.First(k => k.IsMatch(paragraph));
             var escaped = new EscapedString(kind.RemoveWrapperMarkers(paragraph));
             var nodes = SelectMarkers(escaped).GetNodes(escaped);
-            if(!wrap)
-                return new StructureNode(nodes);
-            return kind.CreateNode(paragraph, nodes);
+            return wrap ? kind.CreateNode(paragraph, nodes) : new StructureNode(nodes) ;
         }
 
         public INode ParseText(string text)

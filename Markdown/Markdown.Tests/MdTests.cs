@@ -25,6 +25,7 @@ namespace Markdown.Tests
         [TestCase(@"\_\_a\_\_", Result = "__a__", TestName = "Escaped__")]
         [TestCase(@"\__a_\_", Result = "_<em>a</em>_", TestName = "Escape_NotGreedy")]
         [TestCase(@"", Result = "", TestName = "Empty")]
+        [TestCase(@"a`b`a", Result = "a<code>b</code>a", TestName = "Inline code")]
         public string Should_convert_to_Html_correctly(string markdown)
         {
             return Md.RenderParagraph(markdown, RenderTarget.Html);
@@ -49,6 +50,13 @@ namespace Markdown.Tests
         [TestCase("# a", Result = "<h1>a</h1>", TestName = "h1")]
         [TestCase("### a ##", Result = "<h3>a</h3>", TestName = "double wrap")]
         public string RenderParagraph_Should_render_headers(string markdown)
+        {
+            return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
+        }
+
+        [TestCase("    a\n    b", Result = "<pre><code>    a\n    b</code></pre>", TestName = "Space indented")]
+        [TestCase("\ta\n\tb", Result = "<pre><code>\ta\n\tb</code></pre>", TestName = "Tab indented")]
+        public string RenderParagraph_Should_render_code_blocks(string markdown)
         {
             return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
         }

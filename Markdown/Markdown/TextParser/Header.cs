@@ -16,7 +16,7 @@ namespace Markdown.TextParser
             return position > 0 && position < str.Length && str[position - 1] == '#' && str[position] == ' ';
         }
 
-        public StructureNode CreateNode(string str, IEnumerable<INode> nodes)
+        public INode CreateNode(string str, IEnumerable<INode> nodes)
         {
             return new HeaderNode(nodes, Level(str));
         }
