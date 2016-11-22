@@ -2,21 +2,31 @@
 using System.IO;
 using Markdown.TextParser;
 using Markdown.TextRender;
-using Markdown.Utilities;
+using Markdown.Tree;
 
 namespace Markdown
 {
     public static class Md
     {
-        public static string Render(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null)
+        public static string RenderParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null)
         {
             var parser = new MarkdownParser();
-            var escapedString = new EscapedString(markdown);
-            var root = parser.GetRoot(escapedString);
+            var root = parser.ParseSingleParagraph(markdown);
+            return WriteNode(root, renderTarget, className);
+        }
+
+        public static string RenderText(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null)
+        {
+            var parser = new MarkdownParser();
+            var root = parser.ParseText(markdown);
+            return WriteNode(root, renderTarget, className);
+        }
+
+        private static string WriteNode(INode root, RenderTarget renderTarget, string className)
+        {
             var writer = new StringWriter();
             var renderer = GetRenderer(renderTarget, writer, className);
             root.Render(renderer);
-
             return writer.ToString();
         }
 

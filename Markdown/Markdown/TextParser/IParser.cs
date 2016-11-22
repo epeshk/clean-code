@@ -1,10 +1,10 @@
 ﻿using Markdown.Tree;
-using Markdown.Utilities;
 
 namespace Markdown.TextParser
 {
     public interface IParser
     {
-        INode GetRoot(EscapedString str);
+        INode ParseSingleParagraph(string paragraph, bool wrapToParagraphNode = false);
+        INode ParseText(string text);
     }
 }

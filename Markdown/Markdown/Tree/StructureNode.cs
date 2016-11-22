@@ -10,7 +10,7 @@ namespace Markdown.Tree
 
         public StructureNode(IEnumerable<INode> nestedNodes)
         {
-            this.NestedNodes = nestedNodes.ToList();
+            NestedNodes = nestedNodes.ToList();
         }
 
         public virtual void Render(IRenderer renderer)
@@ -56,7 +56,7 @@ namespace Markdown.Tree
 
         public TextNode(string innerText)
         {
-            this.InnerText = innerText;
+            InnerText = innerText;
         }
 
         public virtual void Render(IRenderer renderer)

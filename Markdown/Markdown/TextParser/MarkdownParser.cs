@@ -1,31 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Markdown.Tree;
 using Markdown.Utilities;
 
 namespace Markdown.TextParser
 {
-    class MarkdownParser : IParser
+    public class MarkdownParser : IParser
     {
-        public IEnumerable<MarkerPosition> SelectMarkers(EscapedString paragraph)
+        public INode ParseSingleParagraph(string paragraph, bool wrapToParagraphNode = false)
         {
-            var markers = new IMarker[]
-            {
-                new ItalicBoldMarker(), 
-                new BoldMarker(), 
-                new ItalicMarker()
-            };
-
-            return markers
-                .SelectMany(marker => GetMarkersPosition(paragraph, marker))
-                .OrderBy(x => x.Start)
-                .RemoveIntersectsMarkers()
-                .RemoveRedundantNestedMarkers();
+            var escaped = new EscapedString(paragraph);
+            var nodes = SelectMarkers(escaped).GetNodes(escaped);
+            return wrapToParagraphNode ? new ParagraphNode(nodes) : new StructureNode(nodes);
         }
 
-        public INode GetRoot(EscapedString str)
+        public INode ParseText(string text)
         {
-            return new StructureNode(SelectMarkers(str).GetNodes(str));
+            return new StructureNode(SplitToParagraphs(text).Select(p => ParseSingleParagraph(p, true)));
         }
 
         internal IEnumerable<MarkerPosition> GetMarkersPosition(EscapedString paragraph, IMarker marker)
@@ -38,7 +30,7 @@ namespace Markdown.TextParser
                     continue;
                 if (startCaptured && marker.MatchEnd(paragraph, position))
                 {
-                    yield return new MarkerPosition(startPosition, position+marker.AddOnEnd, marker);
+                    yield return new MarkerPosition(startPosition, position + marker.AddOnEnd, marker);
                     startCaptured = false;
                 }
                 else if (marker.MatchStart(paragraph, position))
@@ -47,6 +39,29 @@ namespace Markdown.TextParser
                     startPosition = position;
                 }
             }
+        }
+
+        private IEnumerable<MarkerPosition> SelectMarkers(EscapedString paragraph)
+        {
+            var markers = new IMarker[]
+            {
+                new ItalicBoldMarker(),
+                new BoldMarker(),
+                new ItalicMarker()
+            };
+
+            return markers
+                .SelectMany(marker => GetMarkersPosition(paragraph, marker))
+                .OrderBy(x => x.Start)
+                .RemoveIntersectsMarkers()
+                .RemoveRedundantNestedMarkers();
+        }
+
+        private string[] SplitToParagraphs(string text)
+        {
+            return text
+                .Replace("\r\n", "\n")
+                .Split(new[] {"\n\n"}, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
