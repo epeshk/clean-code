@@ -14,6 +14,9 @@ namespace Markdown.TextRender
 
         void StartParagraph();
         void EndParagraph();
+
+        void StartHeader(int level);
+        void EndHeader(int level);
     }
 
     public static class RendererExtensions
@@ -31,6 +34,13 @@ namespace Markdown.TextRender
         public static Handle Paragraph(this IRenderer renderer)
         {
             return new Handle(renderer.StartParagraph, renderer.EndParagraph);
+        }
+
+        public static Handle Header(this IRenderer renderer, int level)
+        {
+            return new Handle(
+                () => renderer.StartHeader(level),
+                () => renderer.EndHeader(level));
         }
     }
 }

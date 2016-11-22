@@ -23,17 +23,26 @@ namespace Markdown.TextRender
 
         private void WriteStartTag(Tag tag)
         {
+            WriteStartTag(Tags[tag]);
+        }
+        private void WriteStartTag(string tag)
+        {
             if (className != null)
             {
-                writer.Write("<{0} class=\"{1}\">", Tags[tag], className);
+                writer.Write("<{0} class=\"{1}\">", tag, className);
                 return;
             }
-            writer.Write("<{0}>", Tags[tag]);
+            writer.Write("<{0}>", tag);
         }
 
         private void WriteEndTag(Tag tag)
         {
-            writer.Write("</{0}>", Tags[tag]);
+            WriteEndTag(Tags[tag]);
+        }
+
+        private void WriteEndTag(string tag)
+        {
+            writer.Write("</{0}>", tag);
         }
 
         public void WriteText(string text)
@@ -69,6 +78,16 @@ namespace Markdown.TextRender
         public void EndParagraph()
         {
             WriteEndTag(Tag.Paragraph);
+        }
+
+        public void StartHeader(int level)
+        {
+            WriteStartTag("h"+level.ToString());
+        }
+
+        public void EndHeader(int level)
+        {
+            WriteEndTag("h" + level.ToString());
         }
     }
 }

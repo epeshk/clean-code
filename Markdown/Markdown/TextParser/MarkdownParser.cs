@@ -8,11 +8,27 @@ namespace Markdown.TextParser
 {
     public class MarkdownParser : IParser
     {
-        public INode ParseSingleParagraph(string paragraph, bool wrapToParagraphNode = false)
+        private static readonly IMarker[] Markers = {
+            new ItalicBoldMarker(),
+            new BoldMarker(),
+            new ItalicMarker()
+        };
+
+        private static readonly IParagraphKind[] ParagraphKinds =
         {
-            var escaped = new EscapedString(paragraph);
+            new Header(),
+            new SimpleParagraph()
+        };
+
+        public INode ParseSingleParagraph(string paragraph, bool wrap = false)
+        {
+
+            var kind = ParagraphKinds.First(k => k.IsMatch(paragraph));
+            var escaped = new EscapedString(kind.RemoveWrapperMarkers(paragraph));
             var nodes = SelectMarkers(escaped).GetNodes(escaped);
-            return wrapToParagraphNode ? new ParagraphNode(nodes) : new StructureNode(nodes);
+            if(!wrap)
+                return new StructureNode(nodes);
+            return kind.CreateNode(paragraph, nodes);
         }
 
         public INode ParseText(string text)
@@ -43,14 +59,8 @@ namespace Markdown.TextParser
 
         private IEnumerable<MarkerPosition> SelectMarkers(EscapedString paragraph)
         {
-            var markers = new IMarker[]
-            {
-                new ItalicBoldMarker(),
-                new BoldMarker(),
-                new ItalicMarker()
-            };
 
-            return markers
+            return Markers
                 .SelectMany(marker => GetMarkersPosition(paragraph, marker))
                 .OrderBy(x => x.Start)
                 .RemoveIntersectsMarkers()

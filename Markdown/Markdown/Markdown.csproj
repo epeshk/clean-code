@@ -42,12 +42,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TextParser\BoldMarker.cs" />
+    <Compile Include="TextParser\Header.cs" />
     <Compile Include="TextParser\IMarker.cs" />
+    <Compile Include="TextParser\IParagraphKind.cs" />
     <Compile Include="TextParser\ItalicBoldMarker.cs" />
     <Compile Include="TextParser\ItalicMarker.cs" />
     <Compile Include="TextParser\MarkdownEnumerableExtensions.cs" />
     <Compile Include="TextParser\MarkerPosition.cs" />
+    <Compile Include="TextParser\SimpleParagraph.cs" />
     <Compile Include="TextParser\TagMarker.cs" />
+    <Compile Include="Tree\BoldNode.cs" />
+    <Compile Include="Tree\HeaderNode.cs" />
+    <Compile Include="Tree\ItalicNode.cs" />
+    <Compile Include="Tree\ParagraphNode.cs" />
+    <Compile Include="Tree\TextNode.cs" />
     <Compile Include="Utilities\Handle.cs" />
     <Compile Include="TextRender\Tag.cs" />
     <Compile Include="TextRender\IRenderer.cs" />

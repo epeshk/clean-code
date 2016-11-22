@@ -15,6 +15,13 @@ namespace Markdown
             return WriteNode(root, renderTarget, className);
         }
 
+        public static string RenderWrappedParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null)
+        {
+            var parser = new MarkdownParser();
+            var root = parser.ParseSingleParagraph(markdown, true);
+            return WriteNode(root, renderTarget, className);
+        }
+
         public static string RenderText(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null)
         {
             var parser = new MarkdownParser();

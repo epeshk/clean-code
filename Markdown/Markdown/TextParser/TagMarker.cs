@@ -7,9 +7,31 @@ namespace Markdown.TextParser
 {
     internal class TagMarker : IMarker
     {
+        private readonly string endTag;
+
+        private readonly string startTag;
+
+        public TagMarker(string tag, bool canContainNested)
+        {
+            startTag = endTag = tag;
+            CanContainNested = canContainNested;
+        }
+
+        public TagMarker(string startTag, string endTag, bool canContainNested)
+        {
+            this.startTag = startTag;
+            this.endTag = endTag;
+            CanContainNested = canContainNested;
+        }
+
+        public virtual bool CanBeJoined(IMarker other, bool otherInLeft)
+        {
+            return false;
+        }
+
         public bool CanContainNested { get; }
-        public int AddOnStart => tag.Length;
-        public int AddOnEnd => tag.Length;
+        public int AddOnStart => startTag.Length;
+        public int AddOnEnd => endTag.Length;
 
         public virtual INode CreateNode(IEnumerable<INode> nestedNodes)
         {
@@ -21,22 +43,43 @@ namespace Markdown.TextParser
             throw new NotImplementedException();
         }
 
-        private readonly string tag;
-
-        public TagMarker(string tag, bool canContainNested)
-        {
-            this.tag = tag;
-            CanContainNested = canContainNested;
-        }
-
         public bool MatchStart(EscapedString s, int position)
         {
-            return s.MatchStart(position, tag);
+            return s.MatchStart(position, startTag);
         }
 
         public bool MatchEnd(EscapedString s, int position)
         {
-            return s.MatchEnd(position, tag);
+            return s.MatchEnd(position, endTag);
         }
+    }
+
+    internal class LinkNameMarker : TagMarker
+    {
+        public LinkNameMarker()
+            : base("[", "]", false)
+        {
+        }
+
+        public override bool CanBeJoined(IMarker other, bool otherInLeft)
+        {
+            if (other.GetType() != typeof(LinkUrlMarker))
+                return false;
+            return !otherInLeft;
+        }
+    }
+
+    internal class LinkUrlMarker : TagMarker
+    {
+        public LinkUrlMarker()
+            : base("(", ")", false)
+        {
+        }
+        public override bool CanBeJoined(IMarker other, bool otherInLeft)
+        {
+            if (other.GetType() != typeof(LinkNameMarker))
+                return false;
+            return otherInLeft;
+        } 
     }
 }

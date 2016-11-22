@@ -4,7 +4,7 @@ namespace Markdown.TextParser
 {
     public interface IParser
     {
-        INode ParseSingleParagraph(string paragraph, bool wrapToParagraphNode = false);
+        INode ParseSingleParagraph(string paragraph, bool wrap = false);
         INode ParseText(string text);
     }
 }

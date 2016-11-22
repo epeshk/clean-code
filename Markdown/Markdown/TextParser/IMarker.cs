@@ -8,6 +8,7 @@ namespace Markdown.TextParser
     {
         bool MatchStart(EscapedString s, int position);
         bool MatchEnd(EscapedString s, int position);
+        bool CanBeJoined(IMarker other, bool otherInLeft);
         bool CanContainNested { get; }
         int AddOnStart { get; }
         int AddOnEnd { get; }

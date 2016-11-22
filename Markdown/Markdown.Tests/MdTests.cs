@@ -44,5 +44,13 @@ namespace Markdown.Tests
         {
             return Md.RenderText(markdown, RenderTarget.Html);
         }
+
+        [TestCase("###A", Result = "<p>###A</p>", TestName = "Not header")]
+        [TestCase("# a", Result = "<h1>a</h1>", TestName = "h1")]
+        [TestCase("### a ##", Result = "<h3>a</h3>", TestName = "double wrap")]
+        public string RenderParagraph_Should_render_headers(string markdown)
+        {
+            return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
+        }
     }
 }
