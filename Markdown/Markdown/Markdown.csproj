@@ -41,18 +41,18 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TextParser\BoldMarker.cs" />
-    <Compile Include="TextParser\CodeBlock.cs" />
-    <Compile Include="TextParser\Header.cs" />
-    <Compile Include="TextParser\IMarker.cs" />
-    <Compile Include="TextParser\InlineCodeMarker.cs" />
-    <Compile Include="TextParser\IParagraphKind.cs" />
-    <Compile Include="TextParser\ItalicBoldMarker.cs" />
-    <Compile Include="TextParser\ItalicMarker.cs" />
+    <Compile Include="TextParser\Markers\BoldMarker.cs" />
+    <Compile Include="TextParser\Paragraphs\CodeBlock.cs" />
+    <Compile Include="TextParser\Paragraphs\Header.cs" />
+    <Compile Include="TextParser\Markers\IMarker.cs" />
+    <Compile Include="TextParser\Markers\InlineCodeMarker.cs" />
+    <Compile Include="TextParser\Paragraphs\IParagraphKind.cs" />
+    <Compile Include="TextParser\Markers\ItalicBoldMarker.cs" />
+    <Compile Include="TextParser\Markers\ItalicMarker.cs" />
     <Compile Include="TextParser\MarkdownEnumerableExtensions.cs" />
     <Compile Include="TextParser\MarkerPosition.cs" />
-    <Compile Include="TextParser\SimpleParagraph.cs" />
-    <Compile Include="TextParser\TagMarker.cs" />
+    <Compile Include="TextParser\Paragraphs\SimpleParagraph.cs" />
+    <Compile Include="TextParser\Markers\TagMarker.cs" />
     <Compile Include="TextRender\RendererExtensions.cs" />
     <Compile Include="Tree\BoldNode.cs" />
     <Compile Include="Tree\CodeBlockNode.cs" />

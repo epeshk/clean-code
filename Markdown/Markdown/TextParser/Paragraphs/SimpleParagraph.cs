@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Markdown.Tree;
 
-namespace Markdown.TextParser
+namespace Markdown.TextParser.Paragraphs
 {
     internal class SimpleParagraph : IParagraphKind
     {

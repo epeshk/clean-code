@@ -1,4 +1,6 @@
-﻿namespace Markdown.TextParser
+﻿using Markdown.TextParser.Markers;
+
+namespace Markdown.TextParser
 {
     internal class MarkerPosition
     {

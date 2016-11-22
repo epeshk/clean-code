@@ -2,7 +2,7 @@
 using Markdown.Tree;
 using Markdown.Utilities;
 
-namespace Markdown.TextParser
+namespace Markdown.TextParser.Markers
 {
     internal interface IMarker
     {

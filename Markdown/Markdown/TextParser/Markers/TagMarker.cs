@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Markdown.Tree;
 using Markdown.Utilities;
 
-namespace Markdown.TextParser
+namespace Markdown.TextParser.Markers
 {
     internal class TagMarker : IMarker
     {
