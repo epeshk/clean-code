@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Markdown.Tree;
+using Markdown.Utilities;
 
 namespace Markdown.TextParser
 {
@@ -37,9 +38,9 @@ namespace Markdown.TextParser
             }
         }
 
-        public static IEnumerable<INode> GetNodes(this IEnumerable<MarkerPosition> markers, string text)
+        public static IEnumerable<INode> GetNodes(this EscapedString text)
         {
-            return GetNodes(markers.GetEnumerator(), text, 0, text.Length);
+            return GetNodes(text.SelectMarkers().GetEnumerator(), text, 0, text.Length);
         }
 
         private static IEnumerable<INode> GetNodes(IEnumerator<MarkerPosition> markers, string text, int start, int upperBound)

@@ -61,7 +61,6 @@
     <Compile Include="EscapedStringExtensionsTests.cs" />
     <Compile Include="EscapedStringTests.cs" />
     <Compile Include="MarkdownEnumerableExtensionsTests.cs" />
-    <Compile Include="MarkdownParserTests.cs" />
     <Compile Include="MdPerfomanceTests.cs" />
     <Compile Include="MdTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

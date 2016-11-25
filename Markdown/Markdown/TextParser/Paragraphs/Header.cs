@@ -1,30 +1,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using Markdown.Tree;
+using Markdown.Utilities;
 
 namespace Markdown.TextParser.Paragraphs
 {
     internal class Header : IParagraphKind
     {
-        public bool IsMatch(string str)
+        public INode ParseOrNull(string str, bool wrap)
         {
             if (string.IsNullOrEmpty(str))
-                return false;
+                return null;
             var position = 0;
             while (position < str.Length && str[position] == '#')
                 ++position;
-            return position > 0 && position < str.Length && str[position - 1] == '#' && str[position] == ' ';
+            if (!(position > 0 && position < str.Length && str[position - 1] == '#' && str[position] == ' '))
+                return null;
+            return CreateNode(str);
         }
 
-        public INode CreateNode(string str, IEnumerable<INode> nodes)
+        private INode CreateNode(string str)
         {
+            var escaped = new EscapedString(RemoveWrapperMarkers(str));
+            var nodes = escaped.GetNodes();
             return new HeaderNode(nodes, Level(str));
         }
 
-        public string RemoveWrapperMarkers(string str)
+        private string RemoveWrapperMarkers(string str)
         {
             return str.Trim('#', ' ');
         }
+
         private int Level(string str)
         {
             return str.TakeWhile(c => c == '#').Count();

@@ -14,37 +14,14 @@ namespace Markdown.TextRender
             {Tag.Code, "code"}
         };
 
-        private readonly TextWriter writer;
         private readonly string className;
+
+        private readonly TextWriter writer;
 
         public HtmlRenderer(TextWriter writer, string className = null)
         {
             this.writer = writer;
             this.className = className;
-        }
-
-        private void WriteStartTag(Tag tag)
-        {
-            WriteStartTag(Tags[tag]);
-        }
-        private void WriteStartTag(string tag)
-        {
-            if (className != null)
-            {
-                writer.Write("<{0} class=\"{1}\">", tag, className);
-                return;
-            }
-            writer.Write("<{0}>", tag);
-        }
-
-        private void WriteEndTag(Tag tag)
-        {
-            WriteEndTag(Tags[tag]);
-        }
-
-        private void WriteEndTag(string tag)
-        {
-            writer.Write("</{0}>", tag);
         }
 
         public void WriteText(string text)
@@ -104,12 +81,37 @@ namespace Markdown.TextRender
 
         public void StartHeader(int level)
         {
-            WriteStartTag("h"+level.ToString());
+            WriteStartTag("h" + level);
         }
 
         public void EndHeader(int level)
         {
-            WriteEndTag("h" + level.ToString());
+            WriteEndTag("h" + level);
+        }
+
+        private void WriteStartTag(Tag tag)
+        {
+            WriteStartTag(Tags[tag]);
+        }
+
+        private void WriteStartTag(string tag)
+        {
+            if (className != null)
+            {
+                writer.Write("<{0} class=\"{1}\">", tag, className);
+                return;
+            }
+            writer.Write("<{0}>", tag);
+        }
+
+        private void WriteEndTag(Tag tag)
+        {
+            WriteEndTag(Tags[tag]);
+        }
+
+        private void WriteEndTag(string tag)
+        {
+            writer.Write("</{0}>", tag);
         }
     }
 }

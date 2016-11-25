@@ -1,23 +1,15 @@
 using System.Collections.Generic;
 using Markdown.Tree;
+using Markdown.Utilities;
 
 namespace Markdown.TextParser.Paragraphs
 {
     internal class SimpleParagraph : IParagraphKind
     {
-        public bool IsMatch(string str)
+        public INode ParseOrNull(string str, bool wrap)
         {
-            return true;
-        }
-
-        public INode CreateNode(string str, IEnumerable<INode> nodes)
-        {
-            return new ParagraphNode(nodes);
-        }
-
-        public string RemoveWrapperMarkers(string str)
-        {
-            return str;
+            var escaped = new EscapedString(str);
+            return !wrap ? new StructureNode(escaped.GetNodes()) : new ParagraphNode(escaped.GetNodes());
         }
     }
 }

@@ -1,23 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Markdown.Tree;
+using Markdown.Utilities;
 
 namespace Markdown.TextParser.Paragraphs
 {
     internal class CodeBlock : IParagraphKind
     {
-        public bool IsMatch(string str)
+        public INode ParseOrNull(string str, bool wrap)
         {
             var lines = str.Split('\n');
-            return lines.All(line => line.StartsWith("\t") || line.StartsWith("    "));
+            if (!lines.All(line => line.StartsWith("\t") || line.StartsWith("    ")))
+                return null;
+            var escaped = RemoveWrapperMarkers(str);
+            return CreateNode(escaped);
         }
 
-        public INode CreateNode(string str, IEnumerable<INode> nodes)
+        private INode CreateNode(string str)
         {
-            return new CodeBlockNode(RemoveWrapperMarkers(str));
+            return new CodeBlockNode(str);
         }
 
-        public string RemoveWrapperMarkers(string str)
+        private string RemoveWrapperMarkers(string str)
         {
             return string.Join("\n", str.Split('\n').Select(s =>
             {

@@ -1,4 +1,9 @@
-﻿namespace Markdown.Utilities
+﻿using System.Collections.Generic;
+using System.Linq;
+using Markdown.TextParser;
+using Markdown.TextParser.Markers;
+
+namespace Markdown.Utilities
 {
     internal static class EscapedStringExtensions
     {
@@ -16,6 +21,36 @@
                 return false;
             return Match(paragraph, position, marker)
                    && !CharIsWhitespace(paragraph, position - 1);
+        }
+
+        public static IEnumerable<MarkerPosition> SelectMarkers(this EscapedString paragraph)
+        {
+            return MarkdownDefinitions.Markers
+                .SelectMany(paragraph.GetMarkersPosition)
+                .OrderBy(x => x.Start)
+                .RemoveIntersectsMarkers()
+                .RemoveRedundantNestedMarkers();
+        }
+
+        public static IEnumerable<MarkerPosition> GetMarkersPosition(this EscapedString paragraph, IMarker marker)
+        {
+            var startCaptured = false;
+            var startPosition = -1;
+            for (var position = 0; position < paragraph.Length; ++position)
+            {
+                if (paragraph.IsEscaped(position))
+                    continue;
+                if (startCaptured && marker.MatchEnd(paragraph, position))
+                {
+                    yield return new MarkerPosition(startPosition, position + marker.AddOnEnd, marker);
+                    startCaptured = false;
+                }
+                else if (marker.MatchStart(paragraph, position))
+                {
+                    startCaptured = true;
+                    startPosition = position;
+                }
+            }
         }
 
         private static bool Match(EscapedString paragraph, int position, string marker)

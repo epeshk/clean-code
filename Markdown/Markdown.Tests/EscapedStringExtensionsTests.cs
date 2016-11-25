@@ -1,11 +1,13 @@
 using FluentAssertions;
+using Markdown.TextParser;
+using Markdown.TextParser.Markers;
 using Markdown.Utilities;
 using NUnit.Framework;
 
 namespace Markdown.Tests
 {
     [TestFixture]
-    public class EscapedStringExtensionsTests
+    internal class EscapedStringExtensionsTests
     {
         [TestCase("a_ b", 1, "_", TestName = "_SpaceAhead")]
         [TestCase(@"a\_b", 1, "_", TestName = "_Escaped")] // _ has index 1 in EscapedString
@@ -78,5 +80,21 @@ namespace Markdown.Tests
             var escaped = new EscapedString(str);
             escaped.MatchEnd(position, marker).Should().BeTrue();
         }
+
+        [TestCaseSource(nameof(GetMarkersPositionTestCases))]
+        public void GetMarkersPosition_should_return_correct_markers_position(string paragraph, IMarker marker,
+            MarkerPosition[] expected)
+        {
+            var escapedString = new EscapedString(paragraph);
+            escapedString.GetMarkersPosition(marker).ShouldBeEquivalentTo(expected);
+        }
+
+        private static readonly TestCaseData[] GetMarkersPositionTestCases =
+        {
+            new TestCaseData("_a_", new ItalicMarker(), new[] {new MarkerPosition(0, 3, new ItalicMarker())}),
+            new TestCaseData("__a__", new BoldMarker(), new[] {new MarkerPosition(0, 5, new BoldMarker())}),
+            new TestCaseData("___a___", new ItalicBoldMarker(), new[] {new MarkerPosition(0, 7, new ItalicBoldMarker())}),
+            new TestCaseData("ab_a_b_a_b", new ItalicMarker(), new[] {new MarkerPosition(2, 5, new ItalicMarker()), new MarkerPosition(6, 9, new ItalicMarker())})
+        };
     }
 }
