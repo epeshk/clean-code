@@ -28,6 +28,7 @@ namespace Markdown.Tests
         [TestCase(@"a`b`a", Result = "a<code>b</code>a", TestName = "Inline code")]
         [TestCase(@"(link)[title]", Result = "<a href=\"link\">title</a>", TestName = "OnlyLink")]
         [TestCase(@"a(link)[title]a", Result = "a<a href=\"link\">title</a>a", TestName = "Link")]
+        [TestCase(@"a(link)a", Result = "a<a href=\"link\">link</a>a", TestName = "LinkWithoutTitle")]
         public string Should_convert_to_Html_correctly(string markdown)
         {
             return Md.RenderParagraph(markdown, RenderTarget.Html);

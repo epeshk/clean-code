@@ -44,7 +44,6 @@
     <Compile Include="TextParser\MarkdownDefinitions.cs" />
     <Compile Include="TextParser\Markers\BoldMarker.cs" />
     <Compile Include="TextParser\Markers\LinkMarker.cs" />
-    <Compile Include="TextParser\Markers\UrlMarker.cs" />
     <Compile Include="TextParser\Paragraphs\CodeBlock.cs" />
     <Compile Include="TextParser\Paragraphs\Header.cs" />
     <Compile Include="TextParser\Markers\IMarker.cs" />
