@@ -29,6 +29,11 @@ namespace Markdown.TextRender
             return new Handle(renderer.StartCode, renderer.EndCode);
         }
 
+        public static Handle Link(this IRenderer renderer, string url)
+        {
+            return new Handle(() => renderer.StartLink(url), renderer.EndLink);
+        }
+
         public static Handle Header(this IRenderer renderer, int level)
         {
             return new Handle(

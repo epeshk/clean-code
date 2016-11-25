@@ -26,13 +26,23 @@ namespace Markdown.Tests
         [TestCase(@"\__a_\_", Result = "_<em>a</em>_", TestName = "Escape_NotGreedy")]
         [TestCase(@"", Result = "", TestName = "Empty")]
         [TestCase(@"a`b`a", Result = "a<code>b</code>a", TestName = "Inline code")]
+        [TestCase(@"(link)[title]", Result = "<a href=\"link\">title</a>", TestName = "OnlyLink")]
+        [TestCase(@"a(link)[title]a", Result = "a<a href=\"link\">title</a>a", TestName = "Link")]
         public string Should_convert_to_Html_correctly(string markdown)
         {
             return Md.RenderParagraph(markdown, RenderTarget.Html);
         }
 
+        [TestCase(@"(/link)[title]", Result = "<a href=\"base:/link\">title</a>", TestName = "OnlyLink")]
+        [TestCase(@"a(/link)[title]a", Result = "a<a href=\"base:/link\">title</a>a", TestName = "Link")]
+        public string Should_respect_base_url(string markdown)
+        {
+            return Md.RenderParagraph(markdown, RenderTarget.Html,null, "base:");
+        }
+
         [TestCase(@"_a_", Result = "<em class=\"x\">a</em>", TestName = "To one tag")]
-        [TestCase(@"__a_b_c__", Result = "<strong class=\"x\">a<em class=\"x\">b</em>c</strong>", TestName = "To many tags")]
+        [TestCase(@"__a_b_c__", Result = "<strong class=\"x\">a<em class=\"x\">b</em>c</strong>",
+            TestName = "To many tags")]
         public string Should_add_className_if_specified(string markdown)
         {
             return Md.RenderParagraph(markdown, RenderTarget.Html, "x");
@@ -43,7 +53,7 @@ namespace Markdown.Tests
         [TestCase("a\n\r\nb", Result = "<p>a</p><p>b</p>", TestName = "MIXED")]
         public string RenderText_Should_split_result_to_paragraphs_With_line_endings(string markdown)
         {
-            return Md.RenderText(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html);
         }
 
         [TestCase("###A", Result = "<p>###A</p>", TestName = "Not header")]

@@ -43,43 +43,14 @@ namespace Markdown.TextParser.Markers
             throw new NotImplementedException();
         }
 
-        public bool MatchStart(EscapedString s, int position)
+        public virtual bool MatchStart(EscapedString s, int position)
         {
             return s.MatchStart(position, startTag);
         }
 
-        public bool MatchEnd(EscapedString s, int position)
+        public virtual bool MatchEnd(EscapedString s, int position)
         {
             return s.MatchEnd(position, endTag);
         }
-    }
-
-    internal class LinkNameMarker : TagMarker
-    {
-        public LinkNameMarker()
-            : base("[", "]", false)
-        {
-        }
-
-        public override bool CanBeJoined(IMarker other, bool otherInLeft)
-        {
-            if (other.GetType() != typeof(LinkUrlMarker))
-                return false;
-            return !otherInLeft;
-        }
-    }
-
-    internal class LinkUrlMarker : TagMarker
-    {
-        public LinkUrlMarker()
-            : base("(", ")", false)
-        {
-        }
-        public override bool CanBeJoined(IMarker other, bool otherInLeft)
-        {
-            if (other.GetType() != typeof(LinkNameMarker))
-                return false;
-            return otherInLeft;
-        } 
     }
 }

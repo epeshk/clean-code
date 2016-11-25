@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Markdown.Tree;
 using Markdown.Utilities;
 

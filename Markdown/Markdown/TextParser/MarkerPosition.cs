@@ -4,9 +4,9 @@ namespace Markdown.TextParser
 {
     internal class MarkerPosition
     {
-        public readonly int UpperBound;
         public readonly IMarker Marker;
         public readonly int Start;
+        public readonly int UpperBound;
 
         public MarkerPosition(int start, int upperBound, IMarker marker)
         {

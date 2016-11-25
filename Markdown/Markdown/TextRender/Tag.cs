@@ -6,6 +6,7 @@
         Bold,
         Paragraph,
         Preformatted,
-        Code
+        Code,
+        Anchor
     }
 }

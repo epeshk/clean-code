@@ -21,5 +21,8 @@
 
         void StartHeader(int level);
         void EndHeader(int level);
+
+        void StartLink(string url);
+        void EndLink();
     }
 }

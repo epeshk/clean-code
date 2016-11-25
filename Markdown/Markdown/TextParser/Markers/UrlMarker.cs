@@ -2,16 +2,16 @@ using Markdown.Tree;
 
 namespace Markdown.TextParser.Markers
 {
-    internal class ItalicMarker : TagMarker
+    internal class UrlMarker : TagMarker
     {
-        public ItalicMarker()
-            : base("_", false)
+        public UrlMarker()
+            : base("(", ")", false)
         {
         }
 
         public override INode CreateNode(string s, int start, int end)
         {
-            return new ItalicNode(s.Substring(start + 1, end - start - 2));
+            return new LinkNode(s.Substring(start, end).Trim('(', ')'));
         }
     }
 }

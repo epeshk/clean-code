@@ -11,7 +11,7 @@ namespace Markdown.TextParser.Markers
 
         public override INode CreateNode(string s, int start, int end)
         {
-            return new BoldNode(new [] {new ItalicNode(s.Substring(start+3, end-start-6))});
+            return new BoldNode(new[] {new ItalicNode(s.Substring(start + 3, end - start - 6))});
         }
     }
 }

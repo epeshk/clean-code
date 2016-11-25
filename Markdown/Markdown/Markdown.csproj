@@ -41,7 +41,10 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TextParser\MarkdownDefinitions.cs" />
     <Compile Include="TextParser\Markers\BoldMarker.cs" />
+    <Compile Include="TextParser\Markers\LinkMarker.cs" />
+    <Compile Include="TextParser\Markers\UrlMarker.cs" />
     <Compile Include="TextParser\Paragraphs\CodeBlock.cs" />
     <Compile Include="TextParser\Paragraphs\Header.cs" />
     <Compile Include="TextParser\Markers\IMarker.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="Tree\HeaderNode.cs" />
     <Compile Include="Tree\InlineCodeNode.cs" />
     <Compile Include="Tree\ItalicNode.cs" />
+    <Compile Include="Tree\LinkNode.cs" />
     <Compile Include="Tree\ParagraphNode.cs" />
     <Compile Include="Tree\TextNode.cs" />
     <Compile Include="Utilities\Handle.cs" />

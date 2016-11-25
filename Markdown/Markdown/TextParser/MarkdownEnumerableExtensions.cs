@@ -43,7 +43,8 @@ namespace Markdown.TextParser
             return GetNodes(text.SelectMarkers().GetEnumerator(), text, 0, text.Length);
         }
 
-        private static IEnumerable<INode> GetNodes(IEnumerator<MarkerPosition> markers, string text, int start, int upperBound)
+        private static IEnumerable<INode> GetNodes(IEnumerator<MarkerPosition> markers, string text, int start,
+            int upperBound)
         {
             var current = start;
 
@@ -56,7 +57,8 @@ namespace Markdown.TextParser
                     yield return new TextNode(text.Substring(current, marker.Start - current));
 
                 var node = marker.Marker.CanContainNested
-                    ? marker.Marker.CreateNode(GetNodes(markers, text, marker.Start + marker.Marker.AddOnStart, marker.UpperBound - marker.Marker.AddOnEnd))
+                    ? marker.Marker.CreateNode(GetNodes(markers, text, marker.Start + marker.Marker.AddOnStart,
+                        marker.UpperBound - marker.Marker.AddOnEnd))
                     : marker.Marker.CreateNode(text, marker.Start, marker.UpperBound);
                 yield return node;
                 current = marker.UpperBound;

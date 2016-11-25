@@ -11,7 +11,7 @@ namespace Markdown.TextParser.Markers
 
         public override INode CreateNode(string s, int start, int end)
         {
-            return new InlineCodeNode(s.Substring(start+1, end-start-2));
+            return new InlineCodeNode(s.Substring(start + 1, end - start - 2));
         }
     }
 }

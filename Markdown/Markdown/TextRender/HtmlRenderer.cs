@@ -11,17 +11,20 @@ namespace Markdown.TextRender
             {Tag.Italic, "em"},
             {Tag.Paragraph, "p"},
             {Tag.Preformatted, "pre"},
-            {Tag.Code, "code"}
+            {Tag.Code, "code"},
+            {Tag.Anchor, "a"}
         };
 
         private readonly string className;
+        private readonly string baseUrl;
 
         private readonly TextWriter writer;
 
-        public HtmlRenderer(TextWriter writer, string className = null)
+        public HtmlRenderer(TextWriter writer, string className = null, string baseUrl = null)
         {
             this.writer = writer;
             this.className = className;
+            this.baseUrl = baseUrl;
         }
 
         public void WriteText(string text)
@@ -88,6 +91,15 @@ namespace Markdown.TextRender
         {
             WriteEndTag("h" + level);
         }
+        public void StartLink(string url)
+        {
+            WriteLinkStartTag(url);
+        }
+
+        public void EndLink()
+        {
+            WriteEndTag(Tag.Anchor);
+        }
 
         private void WriteStartTag(Tag tag)
         {
@@ -102,6 +114,16 @@ namespace Markdown.TextRender
                 return;
             }
             writer.Write("<{0}>", tag);
+        }
+        private void WriteLinkStartTag(string url)
+        {
+            var absoluteUrl = baseUrl != null && url.StartsWith("/") ? baseUrl + url : url;
+            if (className != null)
+            {
+                writer.Write("<a href=\"{0}\" class=\"{1}\">", absoluteUrl, className);
+                return;
+            }
+            writer.Write("<a href=\"{0}\">", absoluteUrl);
         }
 
         private void WriteEndTag(Tag tag)
