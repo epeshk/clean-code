@@ -14,12 +14,19 @@ namespace Markdown.TextParser.Paragraphs
 
         public INode CreateNode(string str, IEnumerable<INode> nodes)
         {
-            return new CodeBlockNode(str);
+            return new CodeBlockNode(RemoveWrapperMarkers(str));
         }
 
         public string RemoveWrapperMarkers(string str)
         {
-            return str;
+            return string.Join("\n", str.Split('\n').Select(s =>
+            {
+                if (s.StartsWith("    ") && s.Length > 4)
+                    return s.Substring(4);
+                if (s.StartsWith("\t") && s.Length > 1)
+                    return s.Substring(1);
+                return string.Empty;
+            }));
         }
     }
 }

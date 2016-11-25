@@ -54,8 +54,10 @@ namespace Markdown.Tests
             return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
         }
 
-        [TestCase("    a\n    b", Result = "<pre><code>    a\n    b</code></pre>", TestName = "Space indented")]
-        [TestCase("\ta\n\tb", Result = "<pre><code>\ta\n\tb</code></pre>", TestName = "Tab indented")]
+        [TestCase("    a\n    b", Result = "<pre><code>a\nb</code></pre>", TestName = "Space indented")]
+        [TestCase("\ta\n\tb", Result = "<pre><code>a\nb</code></pre>", TestName = "Tab indented")]
+        [TestCase("\ta\n\t\tb", Result = "<pre><code>a\n\tb</code></pre>", TestName = "Save tabs")]
+        [TestCase("\ta\n\t    b", Result = "<pre><code>a\n    b</code></pre>", TestName = "Save spaces")]
         public string RenderParagraph_Should_render_code_blocks(string markdown)
         {
             return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
