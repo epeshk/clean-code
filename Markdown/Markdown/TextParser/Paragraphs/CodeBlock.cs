@@ -5,7 +5,7 @@ namespace Markdown.TextParser.Paragraphs
 {
     internal class CodeBlock : IParagraphKind
     {
-        public INode ParseOrNull(string str, bool wrap)
+        public INode Parse(string str, bool wrap)
         {
             var lines = str.Split('\n');
             if (!lines.All(line => line.StartsWith("\t") || line.StartsWith("    ")))

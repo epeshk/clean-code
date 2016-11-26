@@ -7,7 +7,7 @@ namespace Markdown.TextParser.Paragraphs
 {
     internal class NumberedList : IParagraphKind
     {
-        public INode ParseOrNull(string str, bool wrap)
+        public INode Parse(string str, bool wrap)
         {
             var lines =
                 str.Split('\n')

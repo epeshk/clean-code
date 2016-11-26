@@ -127,6 +127,7 @@ namespace Markdown.TextRender
         {
             WriteStartTag(Tags[tag]);
         }
+
         private void WriteStartTag(string tag)
         {
             if (className != null)

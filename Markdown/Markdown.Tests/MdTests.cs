@@ -31,8 +31,8 @@ namespace Markdown.Tests
         [TestCase(@"a[title]a(link)", Result = @"a[title]a(link)")]
         [TestCase(@"[_title_](link)", Result = "<a href=\"link\"><em>title</em></a>", TestName = "ItalicLink")]
         [TestCase("1.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "List")]
-        [TestCase("5.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "List with unordered indexed items")]  
-
+        [TestCase("5.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>",
+            TestName = "List with unordered indexed items")]
         public string Should_convert_to_Html_correctly(string markdown)
         {
             return Md.Render(markdown, RenderTarget.Html, null, null, false);
@@ -78,7 +78,8 @@ namespace Markdown.Tests
             return Md.Render(markdown, RenderTarget.Html);
         }
 
-        [TestCase("    code [title](link) ccc", Result = "<pre><code>code [title](link) ccc</code></pre>", TestName = "Link")]
+        [TestCase("    code [title](link) ccc", Result = "<pre><code>code [title](link) ccc</code></pre>",
+            TestName = "Link")]
         [TestCase("    co __d__ e", Result = "<pre><code>co __d__ e</code></pre>", TestName = "Bold")]
         [TestCase("    co _d_ e", Result = "<pre><code>co _d_ e</code></pre>", TestName = "Italic")]
         public string CodeBlock_should_not_contain(string markdown)
@@ -94,7 +95,8 @@ namespace Markdown.Tests
             return Md.Render(markdown, RenderTarget.Html);
         }
 
-        [TestCase("1.  a [link](link) b", Result = "<ol><li>a <a href=\"link\">link</a> b</li></ol>", TestName = "Link")]
+        [TestCase("1.  a [link](link) b", Result = "<ol><li>a <a href=\"link\">link</a> b</li></ol>", TestName = "Link")
+        ]
         [TestCase("2.  a __b__ c", Result = "<ol><li>a <strong>b</strong> c</li></ol>", TestName = "Bold")]
         [TestCase("3.  a _b_ c", Result = "<ol><li>a <em>b</em> c</li></ol>", TestName = "Italic")]
         public string List_can_contain(string markdown)

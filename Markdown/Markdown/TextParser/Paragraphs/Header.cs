@@ -6,7 +6,7 @@ namespace Markdown.TextParser.Paragraphs
 {
     internal class Header : IParagraphKind
     {
-        public INode ParseOrNull(string str, bool wrap)
+        public INode Parse(string str, bool wrap)
         {
             if (string.IsNullOrEmpty(str))
                 return null;

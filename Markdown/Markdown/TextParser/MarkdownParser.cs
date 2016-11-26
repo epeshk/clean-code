@@ -9,7 +9,7 @@ namespace Markdown.TextParser
         public INode ParseSingleParagraph(string paragraph, bool wrap = false)
         {
             return MarkdownDefinitions.ParagraphKinds
-                .Select(k => k.ParseOrNull(paragraph, wrap))
+                .Select(k => k.Parse(paragraph, wrap))
                 .First(x => x != null);
         }
 

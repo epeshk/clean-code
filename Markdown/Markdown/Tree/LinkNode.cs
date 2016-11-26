@@ -4,8 +4,8 @@ namespace Markdown.Tree
 {
     internal class LinkNode : INode
     {
-        private readonly string url;
         private readonly INode titleNode;
+        private readonly string url;
 
         public LinkNode(string url, INode titleNode = null)
         {
