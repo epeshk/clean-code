@@ -18,6 +18,7 @@ namespace Markdown.TextParser
         {
             new Header(),
             new CodeBlock(),
+            new NumberedList(),
             new SimpleParagraph()
         };
     }

@@ -19,6 +19,12 @@
         void StartCode();
         void EndCode();
 
+        void StartList();
+        void EndList();
+
+        void StartListEntry();
+        void EndListEntry();
+
         void StartHeader(int level);
         void EndHeader(int level);
 

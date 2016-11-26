@@ -15,8 +15,9 @@ namespace Markdown.TextRender
             {Tag.Anchor, "a"}
         };
 
-        private readonly string className;
         private readonly string baseUrl;
+
+        private readonly string className;
 
         private readonly TextWriter writer;
 
@@ -82,6 +83,26 @@ namespace Markdown.TextRender
             WriteEndTag(Tag.Code);
         }
 
+        public void StartList()
+        {
+            WriteStartTag("ol");
+        }
+
+        public void EndList()
+        {
+            WriteEndTag("ol");
+        }
+
+        public void StartListEntry()
+        {
+            WriteStartTag("li");
+        }
+
+        public void EndListEntry()
+        {
+            WriteEndTag("li");
+        }
+
         public void StartHeader(int level)
         {
             WriteStartTag("h" + level);
@@ -91,6 +112,7 @@ namespace Markdown.TextRender
         {
             WriteEndTag("h" + level);
         }
+
         public void StartLink(string url)
         {
             WriteLinkStartTag(url);
@@ -115,6 +137,7 @@ namespace Markdown.TextRender
             }
             writer.Write("<{0}>", tag);
         }
+
         private void WriteLinkStartTag(string url)
         {
             var absoluteUrl = baseUrl != null && url.StartsWith("/") ? baseUrl + url : url;

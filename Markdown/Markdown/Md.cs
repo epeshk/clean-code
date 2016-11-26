@@ -16,14 +16,16 @@ namespace Markdown
             return WriteNode(root, renderTarget, className, baseUrl);
         }
 
-        internal static string RenderParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null, string baseUrl = null)
+        internal static string RenderParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html,
+            string className = null, string baseUrl = null)
         {
             var parser = new MarkdownParser();
             var root = parser.ParseSingleParagraph(markdown);
             return WriteNode(root, renderTarget, className, baseUrl);
         }
 
-        internal static string RenderWrappedParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html, string className = null, string baseUrl = null)
+        internal static string RenderWrappedParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html,
+            string className = null, string baseUrl = null)
         {
             var parser = new MarkdownParser();
             var root = parser.ParseSingleParagraph(markdown, true);

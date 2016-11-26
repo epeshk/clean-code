@@ -29,6 +29,8 @@ namespace Markdown.Tests
         [TestCase(@"(link)[title]", Result = "<a href=\"link\">title</a>", TestName = "OnlyLink")]
         [TestCase(@"a(link)[title]a", Result = "a<a href=\"link\">title</a>a", TestName = "Link")]
         [TestCase(@"a(link)a", Result = "a<a href=\"link\">link</a>a", TestName = "LinkWithoutTitle")]
+        [TestCase("1.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "List")]
+        [TestCase("5.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "UnorderedList")]
         public string Should_convert_to_Html_correctly(string markdown)
         {
             return Md.RenderParagraph(markdown, RenderTarget.Html);
@@ -38,7 +40,7 @@ namespace Markdown.Tests
         [TestCase(@"a(/link)[title]a", Result = "a<a href=\"base:/link\">title</a>a", TestName = "Link")]
         public string Should_respect_base_url(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html,null, "base:");
+            return Md.RenderParagraph(markdown, RenderTarget.Html, null, "base:");
         }
 
         [TestCase(@"_a_", Result = "<em class=\"x\">a</em>", TestName = "To one tag")]
