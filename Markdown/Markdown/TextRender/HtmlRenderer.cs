@@ -103,15 +103,14 @@ namespace Markdown.TextRender
             WriteEndTag("li");
         }
 
-        //интерполяция не является регвыром. используй $"h{level}" 
         public void StartHeader(int level)
         {
-            WriteStartTag("h" + level);
+            WriteStartTag($"h{level}");
         }
 
         public void EndHeader(int level)
         {
-            WriteEndTag("h" + level);
+            WriteEndTag($"h{level}");
         }
 
         public void StartLink(string url)
@@ -128,7 +127,6 @@ namespace Markdown.TextRender
         {
             WriteStartTag(Tags[tag]);
         }
-        //тут тоже интерполяция упростит чтение кода
         private void WriteStartTag(string tag)
         {
             if (className != null)
