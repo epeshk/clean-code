@@ -73,7 +73,31 @@ namespace Markdown.Tests
         [TestCase("\ta\n\t    b", Result = "<pre><code>a\n    b</code></pre>", TestName = "Save spaces")]
         public string RenderParagraph_Should_render_code_blocks(string markdown)
         {
-            return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
+            return Md.RenderParagraph(markdown, RenderTarget.Html);
+        }
+
+        [TestCase("    code (link)[title] ccc", Result = "<pre><code>code (link)[title] ccc</code></pre>", TestName = "Link")]
+        [TestCase("    co __d__ e", Result = "<pre><code>co __d__ e</code></pre>", TestName = "Bold")]
+        [TestCase("    co _d_ e", Result = "<pre><code>co _d_ e</code></pre>", TestName = "Italic")]
+        public string CodeBlock_should_not_contain(string markdown)
+        {
+            return Md.RenderParagraph(markdown, RenderTarget.Html);
+        }
+
+        [TestCase("### a (link)[link] b", Result = "<h3>a <a href=\"link\">link</a> b</h3>", TestName = "Link")]
+        [TestCase("### a __b__ c", Result = "<h3>a <strong>b</strong> c</h3>", TestName = "Bold")]
+        [TestCase("### a _b_ c", Result = "<h3>a <em>b</em> c</h3>", TestName = "Italic")]
+        public string Header_can_contain(string markdown)
+        {
+            return Md.RenderParagraph(markdown, RenderTarget.Html);
+        }
+
+        [TestCase("1.  a (link)[link] b", Result = "<ol><li>a <a href=\"link\">link</a> b</li></ol>", TestName = "Link")]
+        [TestCase("2.  a __b__ c", Result = "<ol><li>a <strong>b</strong> c</li></ol>", TestName = "Bold")]
+        [TestCase("3.  a _b_ c", Result = "<ol><li>a <em>b</em> c</li></ol>", TestName = "Italic")]
+        public string List_can_contain(string markdown)
+        {
+            return Md.RenderParagraph(markdown, RenderTarget.Html);
         }
     }
 }
