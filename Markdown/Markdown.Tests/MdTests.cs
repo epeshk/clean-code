@@ -26,21 +26,23 @@ namespace Markdown.Tests
         [TestCase(@"\__a_\_", Result = "_<em>a</em>_", TestName = "Escape_NotGreedy")]
         [TestCase(@"", Result = "", TestName = "Empty")]
         [TestCase(@"a`b`a", Result = "a<code>b</code>a", TestName = "Inline code")]
-        [TestCase(@"(link)[title]", Result = "<a href=\"link\">title</a>", TestName = "OnlyLink")]
-        [TestCase(@"a(link)[title]a", Result = "a<a href=\"link\">title</a>a", TestName = "Link")]
-        [TestCase(@"a(link)a", Result = "a<a href=\"link\">link</a>a", TestName = "LinkWithoutTitle")]
+        [TestCase(@"[title](link)", Result = "<a href=\"link\">title</a>", TestName = "OnlyLink")]
+        [TestCase(@"a[title](link)a", Result = "a<a href=\"link\">title</a>a", TestName = "Link")]
+        [TestCase(@"a[title]a(link)", Result = @"a[title]a(link)")]
+        [TestCase(@"[_title_](link)", Result = "<a href=\"link\"><em>title</em></a>", TestName = "ItalicLink")]
         [TestCase("1.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "List")]
-        [TestCase("5.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "UnorderedList")]
+        [TestCase("5.  abcd\n2.  ef", Result = "<ol><li>abcd</li><li>ef</li></ol>", TestName = "List with unordered indexed items")]  
+
         public string Should_convert_to_Html_correctly(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html, null, null, false);
         }
 
-        [TestCase(@"(/link)[title]", Result = "<a href=\"base:/link\">title</a>", TestName = "OnlyLink")]
-        [TestCase(@"a(/link)[title]a", Result = "a<a href=\"base:/link\">title</a>a", TestName = "Link")]
+        [TestCase(@"[title](/link)", Result = "<a href=\"base:/link\">title</a>", TestName = "OnlyLink")]
+        [TestCase(@"a[title](/link)a", Result = "a<a href=\"base:/link\">title</a>a", TestName = "Link")]
         public string Should_respect_base_url(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html, null, "base:");
+            return Md.Render(markdown, RenderTarget.Html, null, "base:", false);
         }
 
         [TestCase(@"_a_", Result = "<em class=\"x\">a</em>", TestName = "To one tag")]
@@ -48,7 +50,7 @@ namespace Markdown.Tests
             TestName = "To many tags")]
         public string Should_add_className_if_specified(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html, "x");
+            return Md.Render(markdown, RenderTarget.Html, "x", null, false);
         }
 
         [TestCase("a\r\n\r\nb", Result = "<p>a</p><p>b</p>", TestName = "CRLF")]
@@ -64,7 +66,7 @@ namespace Markdown.Tests
         [TestCase("### a ##", Result = "<h3>a</h3>", TestName = "double wrap")]
         public string RenderParagraph_Should_render_headers(string markdown)
         {
-            return Md.RenderWrappedParagraph(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html);
         }
 
         [TestCase("    a\n    b", Result = "<pre><code>a\nb</code></pre>", TestName = "Space indented")]
@@ -73,31 +75,31 @@ namespace Markdown.Tests
         [TestCase("\ta\n\t    b", Result = "<pre><code>a\n    b</code></pre>", TestName = "Save spaces")]
         public string RenderParagraph_Should_render_code_blocks(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html);
         }
 
-        [TestCase("    code (link)[title] ccc", Result = "<pre><code>code (link)[title] ccc</code></pre>", TestName = "Link")]
+        [TestCase("    code [title](link) ccc", Result = "<pre><code>code [title](link) ccc</code></pre>", TestName = "Link")]
         [TestCase("    co __d__ e", Result = "<pre><code>co __d__ e</code></pre>", TestName = "Bold")]
         [TestCase("    co _d_ e", Result = "<pre><code>co _d_ e</code></pre>", TestName = "Italic")]
         public string CodeBlock_should_not_contain(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html);
         }
 
-        [TestCase("### a (link)[link] b", Result = "<h3>a <a href=\"link\">link</a> b</h3>", TestName = "Link")]
+        [TestCase("### a [link](link) b", Result = "<h3>a <a href=\"link\">link</a> b</h3>", TestName = "Link")]
         [TestCase("### a __b__ c", Result = "<h3>a <strong>b</strong> c</h3>", TestName = "Bold")]
         [TestCase("### a _b_ c", Result = "<h3>a <em>b</em> c</h3>", TestName = "Italic")]
         public string Header_can_contain(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html);
         }
 
-        [TestCase("1.  a (link)[link] b", Result = "<ol><li>a <a href=\"link\">link</a> b</li></ol>", TestName = "Link")]
+        [TestCase("1.  a [link](link) b", Result = "<ol><li>a <a href=\"link\">link</a> b</li></ol>", TestName = "Link")]
         [TestCase("2.  a __b__ c", Result = "<ol><li>a <strong>b</strong> c</li></ol>", TestName = "Bold")]
         [TestCase("3.  a _b_ c", Result = "<ol><li>a <em>b</em> c</li></ol>", TestName = "Italic")]
         public string List_can_contain(string markdown)
         {
-            return Md.RenderParagraph(markdown, RenderTarget.Html);
+            return Md.Render(markdown, RenderTarget.Html);
         }
     }
 }

@@ -76,9 +76,9 @@ namespace Markdown.Utilities
 
         private static bool HasGoodBoundary(EscapedString paragraph, string marker, int position)
         {
-            if (paragraph.OnChar(position - 1, c => char.IsDigit(c) || c == '_', false))
+            if (paragraph.OnChar(position - 1, c => char.IsDigit(c) || c == marker[0], false))
                 return false;
-            return paragraph.OnChar(position + marker.Length, c => !(char.IsDigit(c) || c == '_'), true);
+            return paragraph.OnChar(position + marker.Length, c => !(char.IsDigit(c) || c == marker[0]), true);
         }
     }
 }

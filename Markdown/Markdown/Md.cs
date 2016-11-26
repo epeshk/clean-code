@@ -9,26 +9,10 @@ namespace Markdown
     public static class Md
     {
         public static string Render(string markdown, RenderTarget renderTarget = RenderTarget.Html,
-            string className = null, string baseUrl = null)
+            string className = null, string baseUrl = null, bool wrapParagraphs = true)
         {
             var parser = new MarkdownParser();
-            var root = parser.ParseText(markdown);
-            return WriteNode(root, renderTarget, className, baseUrl);
-        }
-
-        internal static string RenderParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html,
-            string className = null, string baseUrl = null)
-        {
-            var parser = new MarkdownParser();
-            var root = parser.ParseSingleParagraph(markdown);
-            return WriteNode(root, renderTarget, className, baseUrl);
-        }
-
-        internal static string RenderWrappedParagraph(string markdown, RenderTarget renderTarget = RenderTarget.Html,
-            string className = null, string baseUrl = null)
-        {
-            var parser = new MarkdownParser();
-            var root = parser.ParseSingleParagraph(markdown, true);
+            var root = parser.ParseText(markdown, wrapParagraphs);
             return WriteNode(root, renderTarget, className, baseUrl);
         }
 

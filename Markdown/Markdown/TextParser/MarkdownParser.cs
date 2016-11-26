@@ -13,9 +13,9 @@ namespace Markdown.TextParser
                 .First(x => x != null);
         }
 
-        public INode ParseText(string text)
+        public INode ParseText(string text, bool wrap = true)
         {
-            return new StructureNode(SplitToParagraphs(text).Select(p => ParseSingleParagraph(p, true)));
+            return new StructureNode(SplitToParagraphs(text).Select(p => ParseSingleParagraph(p, wrap)));
         }
 
 

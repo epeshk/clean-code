@@ -2,20 +2,22 @@ using Markdown.TextRender;
 
 namespace Markdown.Tree
 {
-    internal class LinkNode : TextNode
+    internal class LinkNode : INode
     {
         private readonly string url;
+        private readonly INode titleNode;
 
-        public LinkNode(string url, string name = null) : base(name ?? url)
+        public LinkNode(string url, INode titleNode = null)
         {
             this.url = url;
+            this.titleNode = titleNode;
         }
 
-        public override void Render(IRenderer renderer)
+        public void Render(IRenderer renderer)
         {
             using (renderer.Link(url))
             {
-                base.Render(renderer);
+                titleNode.Render(renderer);
             }
         }
     }
